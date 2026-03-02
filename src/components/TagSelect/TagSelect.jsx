@@ -13,7 +13,7 @@ export default function TagSelect({label}) {
             <option value="" disabled hidden>{label}</option>
         </select>
         <span className={styles.arrow}>
-            <Image fill src="/logos/downArrow.png" alt=""/>
+            <Image fill src="/logos/downArrow.png" alt="down arrow"/>
         </span>
         </div>
     )
