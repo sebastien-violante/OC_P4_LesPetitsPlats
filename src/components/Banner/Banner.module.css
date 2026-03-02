@@ -53,6 +53,9 @@
     padding-left: 35px;
     border: none;
     font-size: 16px;
+    color: #7A7A7A;
+    font-family: var(--font-manrope);
+    font-weight: 400;
 }
 
 .bannerDown form .submit {
