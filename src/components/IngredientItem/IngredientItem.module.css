@@ -1,0 +1,16 @@
+.ingredientItem {
+    margin-bottom: 21px;
+    width:50%;
+}
+
+.ingredientName {
+    font-weight: 500;
+    font-size: 14px;
+    color: #1B1B1B;
+}
+
+.ingredientQuantity {
+    font-weight: 400;
+    font-size: 14px;
+    color: #7A7A7A;
+}
