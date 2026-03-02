@@ -1,0 +1,19 @@
+.tagContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 60px 112px;
+}
+
+.tagForm {
+    display: flex;
+    gap: 65px;  
+}
+
+.recipesQuantity {
+    width: 100px;
+    text-align: right;
+    font-family: var(--font-anton);
+    font-weight: 400;
+    font-size: 21px;
+}
