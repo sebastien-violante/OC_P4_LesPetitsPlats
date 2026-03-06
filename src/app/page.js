@@ -1,48 +1,43 @@
 'use client'
-import { useEffect } from 'react'
-import { useState } from 'react'
+import { useEffect, useState, useReducer } from 'react'
 import styles from './page.module.css'
-import Banner from '../components/Banner/Banner'
+import Banner from '../components/Banner/BannerDown'
+import BannerUp from '../components/Banner/BannerUp'
+import Footer from '../components/Footer/Footer'
 import TagForm from '../components/TagForm/TagForm'
 import RecipeCard from '../components/RecipeCard/RecipeCard'
-import recipesArray from '../data/recipes.json'
+import allRecipes from '../data/recipes.json'
+import updateTags from './updateTags'
+import filterRecipes from './filterRecipes'
+import reducer from './reducer'
+import initiateTags from './initiateTags'
 
 export default function Home() {
     
-    const [recipes, setRecipes] = useState(recipesArray)
-    let recipesQuantity = recipes.length
-
-    console.log(recipes)
-    useEffect(() => {
-        const handleSearch = (value) => {
-            if(value.length > 3) {
-                setRecipes( prevRecipes => prevRecipes.filter((recipe) => {
-                    const isInName = recipe.name?.toLowerCase().includes(value)
-                    const isInDescription = recipe.description?.toLowerCase().includes(value)
-                    const isInIngredients = recipe.ingredients?.some((ingredient) => ingredient.name?.toLowerCase().includes(value))
-        
-                    return isInName || isInDescription || isInIngredients
-                }))
-            }
-        
-        }
-        const handleInput = (event) => handleSearch(event.target.value.toLowerCase())
-        const searchInput = document.querySelector('input[type="text"]')
-        searchInput.addEventListener('keyup', handleInput)
+    const [state, dispatch] = useReducer(reducer, {
+        search: "",
+        filters: {ingredients:"", ustensils:"", appareils:""}
+    })
     
-    }, [setRecipes])
-
+    const displayedRecipes = filterRecipes(state, allRecipes)
+    const displayedTags = updateTags(state, displayedRecipes)
+    const recipesNumber = displayedRecipes.length
     
     return (
-
         <>
-            <Banner />
-            <TagForm recipesQuantity={recipesQuantity}/>
+            <div className={styles.bannerContent}>
+                <BannerUp/>
+                <Banner onSearchChange={value => dispatch({type:"search", payload: value})}/>
+            </div>
+            
+            <TagForm allTags={displayedTags} recipesNumber={recipesNumber} onTagChange={(value, name) => dispatch({type:"tag", name, value})}/>
             <div className={styles.recipeContainer}>
-                {recipes.map(recipe => (
-                    <RecipeCard key={recipe.id} recipe={recipe} />
+                {displayedRecipes.map(recipe => (
+                    <RecipeCard key={recipe.id} {...recipe} />
                 ))}
             </div>
-        </> 
+            <Footer />
+        </>
+            
     )
 }

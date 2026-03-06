@@ -1,11 +1,11 @@
-.tagContainer {
+.formContainer {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     padding: 60px 112px;
 }
 
-.tagForm {
+.tagContainer {
     display: flex;
     gap: 65px;  
 }
@@ -17,3 +17,4 @@
     font-weight: 400;
     font-size: 21px;
 }
+
