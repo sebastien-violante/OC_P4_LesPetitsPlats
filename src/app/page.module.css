@@ -5,4 +5,11 @@
     justify-content: flex-start;
     padding-left: 102px;
     padding-right: 102px;
+    margin-bottom: 60px;
+}
+
+.bannerContent {
+    width: 100%;
+    position: relative; 
+    background-image: url('/banner-picture.png');
 }

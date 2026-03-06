@@ -1,0 +1,16 @@
+.bannerContentNotFound {
+    width: 100%;
+    position: relative; 
+    z-index:1;
+}
+
+.bannerContentNotFound::before {
+    content: "";
+    position: absolute;
+    inset:0;
+    background-image: url('/banner-picture.png');
+    background-position:center;
+    background-size: cover;
+    filter: brightness(.6);
+    z-index:-1;
+}
