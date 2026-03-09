@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState, useReducer } from 'react'
+import { useReducer } from 'react'
 import styles from './page.module.css'
 import Banner from '../components/Banner/BannerDown'
 import BannerUp from '../components/Banner/BannerUp'
@@ -27,7 +27,7 @@ export default function Home() {
         <>
             <div className={styles.bannerContent}>
                 <BannerUp/>
-                <Banner onSearchChange={value => dispatch({type:"search", payload: value})}/>
+                <Banner onSearchChange={value => dispatch({type:"search", value})}/>
             </div>
             
             <TagForm allTags={displayedTags} recipesNumber={recipesNumber} onTagChange={(value, name) => dispatch({type:"tag", name, value})}/>

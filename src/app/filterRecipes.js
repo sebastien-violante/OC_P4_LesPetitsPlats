@@ -15,14 +15,14 @@ export default function filterRecipes(state, allRecipes) {
 
     if(state.filters.ingredients) {
         filteredRecipes = filteredRecipes.filter((recipe) => {
-            const isInIngredients = recipe.ingredients?.some((item) => item.ingredient.toLowerCase().includes(state.filters.ingredients))
+            const isInIngredients = recipe.ingredients?.some((item) => item.ingredient.toLowerCase().includes(state.filters.ingredients.toLowerCase()))
             return isInIngredients
         })
     }
 
     if(state.filters.appareils) {
         filteredRecipes = filteredRecipes.filter((recipe) => {
-            const isInAppareils = recipe.appliance.toLowerCase() === state.filters.appareils
+            const isInAppareils = recipe.appliance.toLowerCase() === state.filters.appareils.toLowerCase()
             return isInAppareils
         })
         
@@ -30,7 +30,7 @@ export default function filterRecipes(state, allRecipes) {
 
     if(state.filters.ustensils) {
         filteredRecipes = filteredRecipes.filter((recipe) => {
-            const isInUstensils = recipe.ustensils?.some((ustensil) => ustensil === state.filters.ustensils)
+            const isInUstensils = recipe.ustensils?.some((ustensil) => ustensil === state.filters.ustensils.toLowerCase())
             return isInUstensils
         })
         

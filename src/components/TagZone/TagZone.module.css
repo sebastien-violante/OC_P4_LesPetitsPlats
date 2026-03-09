@@ -41,10 +41,6 @@
     cursor: pointer;
 }
 
-.tagZoneBottom {
-    
-}
-
 .tagZoneInputField {
     width: 100%;
     height:100%;
@@ -77,6 +73,7 @@
     overflow: auto;
     padding: 0 16px;
     box-sizing: border-box;
+    list-style-type: none;
 }
 
 .tagZoneProposal {
@@ -89,7 +86,12 @@
     font-weight: 400;
     font-family: var(--font-manrope);
     font-size: 14px;
-    text-overflow: ellipsis;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.tagZoneProposals::-webkit-scrollbar {
+    display: none;
 }
 
 .tagZoneProposal:hover {
