@@ -30,7 +30,7 @@ export default function Home() {
                 <Banner onSearchChange={value => dispatch({type:"search", value})}/>
             </div>
             
-            <TagForm allTags={displayedTags} recipesNumber={recipesNumber} onTagChange={(value, name) => dispatch({type:"tag", name, value})}/>
+            <TagForm allTags={displayedTags} recipesNumber={recipesNumber} recipesSearch={state.search} onTagChange={(value, name) => dispatch({type:"tag", name, value})}/>
             <div className={styles.recipeContainer}>
                 {displayedRecipes.map(recipe => (
                     <RecipeCard key={recipe.id} {...recipe} />

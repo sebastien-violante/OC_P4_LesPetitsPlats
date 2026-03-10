@@ -3,7 +3,7 @@ export default function filterRecipes(state, allRecipes) {
     
     
     let filteredRecipes = allRecipes
-    if(state.search && state.search.length > 3) {
+    if(state.search && state.search.length > 2) {
         const value = state.search.toLowerCase()
         filteredRecipes = filteredRecipes.filter((recipe) => {
             const isInName = recipe.name?.toLowerCase().includes(value)
@@ -35,7 +35,6 @@ export default function filterRecipes(state, allRecipes) {
         })
         
     }
-
     return (filteredRecipes)  
 
 }
