@@ -10,15 +10,13 @@ import allRecipes from '../data/recipes.json'
 import updateTags from './updateTags'
 import filterRecipes from './filterRecipes'
 import reducer from './reducer'
-import initiateTags from './initiateTags'
 
 export default function Home() {
     
     const [state, dispatch] = useReducer(reducer, {
         search: "",
-        filters: {ingredients:"", ustensils:"", appareils:""}
+        filters: {ingredients:[], ustensils:[], appareils:[]}
     })
-    
     const displayedRecipes = filterRecipes(state, allRecipes)
     const displayedTags = updateTags(state, displayedRecipes)
     const recipesNumber = displayedRecipes.length

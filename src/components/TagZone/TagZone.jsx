@@ -6,7 +6,7 @@ export default function TagZone({label, tags,  onTagChange, name}) {
     
     // Initialisation des constantes globales
     const [isOpen, setIsOpen] = useState(false)             // état fermé/ouvert de la zone de tag
-    const [tagSearch, setTagSearch] = useState(null)        // présence ou non d'un tag sélectionné parmi la liste des propositions
+    const [tagSearch, setTagSearch] = useState([])          // présence ou non d'un tag sélectionné parmi la liste des propositions
     const [isSearch, setIsSearch] = useState('')            // valeur saisie dans le champ de recherche du tag
     const filteredTags = tags.filter(tag => tag.toLowerCase().includes(isSearch.toLowerCase()))  // tags filtrés en fonction de la valeur du champ de saisie
     const number = filteredTags.length                      // nécessaire à l'affichage du nombre de recettes
@@ -31,12 +31,13 @@ export default function TagZone({label, tags,  onTagChange, name}) {
      * @param {Event} event - évènement déclenché par le champ input
     */
     function selectTag (event) {
-        setTagSearch(event.target.innerText)
+        setTagSearch((prev) => [...prev, event.target.innerText])
+        console.log(tagSearch)
         onTagChange(event.target.innerText, name)  
     }
   
     /**
-     * Supprime le tag sélectionné pour la recherche et déclanche la mise à jour du state pour redéfinir les tags à afficher
+     * Supprime le tag sélectionné pour la recherche et déclenche la mise à jour du state pour redéfinir les tags à afficher
     */
     function deleteTag() {
         setTagSearch(null)
@@ -79,12 +80,17 @@ export default function TagZone({label, tags,  onTagChange, name}) {
                     </div>
                 )}
             </div>
-            { tagSearch != null && !isOpen && (
-                <div className={styles.deportedTag}>
-                    <p>{tagSearch}</p>
-                    <Image height={10} className={styles.bigCross} width={10} alt="cross" src="/logos/bigCross.png" onClick={deleteTag}/>
-                </div>
+            <div>
+                toto
+                { tagSearch != null && !isOpen && (
+                tagSearch.map(tag => {
+                    <div key={tag} className={styles.deportedTag}>
+                        <p>{tag}</p>
+                        <Image height={10} className={styles.bigCross} width={10} alt="cross" src="/logos/bigCross.png" onClick={deleteTag}/>
+                    </div>
+                })
             )}
+            </div>
             
         </div>
     )

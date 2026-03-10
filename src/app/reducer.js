@@ -3,7 +3,15 @@ export default function reducer(state, action) {
         case "search" :
             return {...state, search: action.value}
         case "tag" :
-            return {...state, filters: {...state.filters, [action.name]: action.value} }
+            return {...state,
+                filters: {
+                    ...state.filters,
+                    [action.name]: [
+                        ...state.filters[action.name],
+                        action.value
+                    ]
+                }
+            }
         default:
             return state
     }
