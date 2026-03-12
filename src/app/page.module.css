@@ -1,3 +1,6 @@
+.mainContainer {
+    position: relative;
+}
 .recipeContainer {
     display: flex;
     gap: 48px; 
@@ -12,4 +15,36 @@
     width: 100%;
     position: relative; 
     background-image: url('/banner-picture.png');
+}
+
+.noRecipeMessage {
+    width: 100%;
+    text-align: center;
+    font-family: var(--font-anton);
+    font-weight: 200;
+    font-size: 21px;
+}
+
+.spanNoRecipeMessage {
+    color: #ffd15b;
+    background: black;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.tagCollector {
+    padding: 20px 112px 60px 112px;
+    display: flex;
+    gap: 30px;
+}
+
+.deportedTag {
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+    background: #FFD15B;
+    border-radius: 11px;
+    padding: 16px;
+    margin-top:20px;
+    width: 195px;
 }

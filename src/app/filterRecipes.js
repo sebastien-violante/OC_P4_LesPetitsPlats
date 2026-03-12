@@ -1,13 +1,14 @@
 // recoit le nouveau state de tags et les recettes affichées et déclenceh l'affichage des recettes filtrées
 export default function filterRecipes(state, allRecipes) {
         
+    console.log(state)
     let filteredRecipes = allRecipes
     if(state.search && state.search.length > 2) {
         const value = state.search.toLowerCase()
         filteredRecipes = filteredRecipes.filter((recipe) => {
             const isInName = recipe.name?.toLowerCase().includes(value)
             const isInDescription = recipe.description?.toLowerCase().includes(value)
-            const isInIngredients = recipe.ingredients?.some((item) => item.ingredient?.toLowerCase().includes(value))
+            const isInIngredients = recipe.ingredients?.some((item) => item.ingredient?.toLowerCase() === (value))
             return isInName || isInDescription || isInIngredients 
         })
     } 
@@ -23,7 +24,7 @@ export default function filterRecipes(state, allRecipes) {
         return isInIngredients
         })
     }
-/*
+
     if(state.filters.appareils) {
         filteredRecipes = filteredRecipes.filter((recipe) => {
             const isInAppareils = 
@@ -41,13 +42,13 @@ export default function filterRecipes(state, allRecipes) {
                 state.filters.ustensils.length === 0 ||
                 state.filters.ustensils.every((filterUstensil) =>
                     recipe.ustensils?.some((item) => 
-                       item.ustensil.toLowerCase().includes(filterUstensil.toLowerCase()) 
+                       item.toLowerCase().includes(filterUstensil.toLowerCase()) 
                 ))
         return isInUstensils
         
         })
     }
-*/
+
     return (filteredRecipes)  
 
 }

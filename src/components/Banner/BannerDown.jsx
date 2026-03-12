@@ -16,11 +16,9 @@ export default function Banner({onSearchChange}) {
             <h1>DÉCOUVREZ NOS RECETTES</h1>
             <h1>DU QUOTIDIEN,SIMPLES ET DÉLICIEUSES</h1>
             <form className={styles.form}>
-                <input className={styles.search} type="text" name="search" placeholder="Rechercher une recette, un ingrédient..." onChange={event => onSearchChange(event.target.value)}/>
-                <div className={styles.submit}>
-                    <Image fill src="/logos/loopcta.svg" alt="search logo" />
-                    { isSearch != '' && (<Image height={13} width={13} alt="cross" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
-                </div>
+                <label htmlFor="searchInput"></label>
+                <input id="searchInput" className={styles.searchInput} type="search" name="searchInput" placeholder="Rechercher une recette, un ingrédient..." onChange={event => onSearchChange(event.target.value)}/>
+                <button type="submit" className={styles.searchSubmit}><Image height={50} width={50} src="/logos/loopcta.svg" alt="search logo" /></button>
             </form>
         </div>
     )
