@@ -1,22 +1,16 @@
 import styles from './TagZone.module.css'
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState, useRef, useEffect } from 'react'
 
-export default function TagZone({label, tags,  onTagChange, name}) {
+export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle, refProp, tagsSearch}) {
     
     // Initialisation des constantes globales
-    const [isOpen, setIsOpen] = useState(false)             // état fermé/ouvert de la zone de tag
-    const [tagSearch, setTagSearch] = useState(null)        // présence ou non d'un tag sélectionné parmi la liste des propositions
+    const [tagSearch, setTagSearch] = useState([])          // présence ou non d'un tag sélectionné parmi la liste des propositions
     const [isSearch, setIsSearch] = useState('')            // valeur saisie dans le champ de recherche du tag
     const filteredTags = tags.filter(tag => tag.toLowerCase().includes(isSearch.toLowerCase()))  // tags filtrés en fonction de la valeur du champ de saisie
     const number = filteredTags.length                      // nécessaire à l'affichage du nombre de recettes
-    
-    /**
-     * Affecte ou enlève l'état open à la zone de tag
-    */
-    function toggleOpen () {
-        setIsOpen(!isOpen)
-    }
+    const inputRef = useRef(null)
+  
        
     /**
      * Affiche la valeur de recherche saisie
@@ -31,19 +25,14 @@ export default function TagZone({label, tags,  onTagChange, name}) {
      * @param {Event} event - évènement déclenché par le champ input
     */
     function selectTag (event) {
-        setTagSearch(event.target.innerText)
-        onTagChange(event.target.innerText, name)  
+        setTagSearch([...tagSearch, event.target.innerText])
+        onTagChange(name, event.target.innerText)  
     }
   
-    /**
-     * Supprime le tag sélectionné pour la recherche et déclanche la mise à jour du state pour redéfinir les tags à afficher
-    */
-    function deleteTag() {
-        setTagSearch(null)
-        onTagChange(null, name)
-        setIsSearch('')
+    function removeSelectedTag(event) {
+        onTagChange(name, event.target.dataset.name, "removal")
+        setTagSearch(tagSearch.filter(tag => tag.toLowerCase() != event.target.dataset.name.toLowerCase()))
     }
-
     /**
      * Supprime la recherche effectuée dans le champ de la tagZone
     */
@@ -51,25 +40,39 @@ export default function TagZone({label, tags,  onTagChange, name}) {
         setIsSearch('')
     }
 
+    useEffect(() => {
+        if(isOpen) inputRef.current.focus()
+    }, [isOpen])
+
+    console.log(tagSearch)
     return (
         <div className={styles.tagContainer}>
             <div className={styles.tagZone}>
                 <div className={styles.tagZoneHeader}>
                     <p className={styles.tagZoneTitle}>{label} - {number}</p>
-                    <Image height={6} width={13} alt="arrow" className={isOpen ? styles.tagZoneArrowUp : styles.tagZoneArrowDown} src="/logos/downArrow.png" onClick={toggleOpen}/>
+                    <Image height={6} width={13} alt="arrow" className={isOpen ? styles.tagZoneArrowUp : styles.tagZoneArrowDown} src="/logos/downArrow.png" onClick={toggle}/>
                 </div>
                 {isOpen && (
-                    <div className={styles.tagZoneBottom}>
+                    <div className={styles.tagZoneBottom} ref={refProp}>
                         <div className={styles.tagZoneInput}>
-                            <input type="text" className={styles.tagZoneInputField} onChange={handleSearch} value={isSearch}/>
+                            <input type="text" className={styles.tagZoneInputField} onChange={handleSearch} value={isSearch} ref={inputRef}/>
                             <Image height={14} width={14} alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
                             { isSearch != '' && (<Image height={6} width={6} alt="cross" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
                         </div>
-                        { tagSearch != null && (
-                        <div className={styles.tagSearch}>
-                            {tagSearch}
-                            <Image height={17} width={17} alt="supprimer"  className={styles.proposalsCross} src="/logos/bigCross.svg" onClick={deleteTag}/>
-                        </div>
+                        { tagSearch.length > 0 && (
+                            tagSearch.map(tag => (
+                                <div key={tag} className={isSearch ? styles.tagSearchNotEmpty : styles.tagSearch}>
+                                    {tag}
+                                    <div className={styles.deleteTag} data-name={tag} onClick={removeSelectedTag}>
+                                        <Image  data-name={tag} height={17} width={17} src="/logos/deleteTag.png" alt="delete tag"/>
+                                    </div>
+                                </div>
+                            ))
+                        )}
+                        {tagsSearch.legnth > 0 && (
+                            tagsSearch.map(tago => (
+                                <p key={tago}>{tago}</p>
+                            ))
                         )}
                         <ul className={styles.tagZoneProposals}>
                             {filteredTags.map(tag => (
@@ -78,14 +81,7 @@ export default function TagZone({label, tags,  onTagChange, name}) {
                         </ul>
                     </div>
                 )}
-            </div>
-            { tagSearch != null && !isOpen && (
-                <div className={styles.deportedTag}>
-                    <p>{tagSearch}</p>
-                    <Image height={10} className={styles.bigCross} width={10} alt="cross" src="/logos/bigCross.png" onClick={deleteTag}/>
-                </div>
-            )}
-            
+            </div>            
         </div>
     )
 }

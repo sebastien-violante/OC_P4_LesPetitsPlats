@@ -13,7 +13,7 @@ function sortAndFilter(array, item) {
     array.forEach(item => tempSet.add(item.charAt(0).toUpperCase()+item.slice(1).toLowerCase()))
     // Suppression des tags sélectionnés de la liste des tags encore proposés
     if(item) {
-        tempSet.delete(item)
+        item.forEach(data => tempSet.delete(data))
     }
     return [...tempSet]
 }
