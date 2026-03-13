@@ -6,6 +6,7 @@ import Footer from '@/src/components/Footer/Footer'
 import UstensilItem from '@/src/components/UstensilItem/UstensilItem'
 import { notFound } from 'next/navigation'
 import BannerUp from '@/src/components/Banner/BannerUp'
+import Link from 'next/link'
 export default async function RecipeDetails({params}) {
 
     const { slug } = await params
@@ -14,10 +15,13 @@ export default async function RecipeDetails({params}) {
     const recipeSteps = recipe.description?.split(/[,.;]/).map(step => step.trim()).filter(step => step !== '')
     
     return (
-        <>
+        <div className={styles.container}>
             <div className={styles.bannerContent}>
                 <BannerUp/>
             </div>
+            <Link href="/">
+            <Image className={styles.arrowBack} src={'/logos/arrowBack.png'} height={50} width={50} alt="retour à l'accueil"/>
+            </Link>
             <div className={styles.recipeContainer}>
                 <div className={styles.recipeImageContainer}>
                     <div className={styles.recipeImageWrapper}>
@@ -34,7 +38,7 @@ export default async function RecipeDetails({params}) {
                             <IngredientItem className={styles.detailsIngredientItem} key={index} ingredient={ingredient}/>
                         ))}
                     </div>
-                    <p className={styles.recipeLabel}>Ustensils nécessaires</p>
+                    <p className={styles.recipeLabel}>Ustensiles nécessaires</p>
                     {recipe.ustensils.map((ustensil, index) => (
                         <UstensilItem className={styles.detailsIngredientItem} key={index} ustensil={ustensil}/>
                     ))}
@@ -49,7 +53,7 @@ export default async function RecipeDetails({params}) {
                 </div>
             </div>
             <Footer />
-        </>
+        </div>
         
     )
 }

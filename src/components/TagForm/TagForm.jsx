@@ -2,7 +2,7 @@ import styles from './TagForm.module.css'
 import TagSelect from '../TagSelect/TagSelect'
 import TagZone from '../TagZone/TagZone'
 
-export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpen, setTagMenuOpen, menuRefs, tagsSearch}) {
+export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpen, setTagMenuOpen, menuRefs, tagsSearch, ingredientsTags, ustensilsTags, appareilsTags}) {
 
     let recettes = recipesNumber <=1 ? " recette" : " recettes"
    
@@ -17,7 +17,7 @@ export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpe
                     isOpen={tagMenuOpen === "menuIngredients"}
                     toggle={() => setTagMenuOpen(prev => prev==="menuIngredients" ? null : "menuIngredients")}
                     refProp={el => (menuRefs.current[0] = el)}
-                    tagsSearch={tagsSearch}
+                    searchTags={ingredientsTags}
                     />
                 <TagZone 
                     label={"Appareils"} 
@@ -27,7 +27,7 @@ export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpe
                     isOpen={tagMenuOpen === "menuAppareils"}
                     toggle={() => setTagMenuOpen(prev => prev==="menuAppareils" ? null : "menuAppareils")}
                     refProp={el => (menuRefs.current[1] = el)}
-                    tagsSearch={tagsSearch}
+                    searchTags={ustensilsTags}
                     />
                 <TagZone 
                     label={"Ustensiles"} 
@@ -37,7 +37,7 @@ export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpe
                     isOpen={tagMenuOpen === "menuUstensils"}
                     toggle={() => setTagMenuOpen(prev => prev==="menuUstensils" ? null : "menuUstensils")}
                     refProp={el => (menuRefs.current[2] = el)}
-                    tagsSearch={tagsSearch}
+                    searchTags={appareilsTags}
                     />
             </div>     
             <p className={styles.recipesQuantity}>{recipesNumber} {recettes}</p>

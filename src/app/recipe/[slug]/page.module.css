@@ -75,3 +75,18 @@
     background-position:center;
     background-size: cover;
 }
+
+.arrowBack {
+    position: absolute;
+    bottom: 180px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.arrowBack:hover {
+    transform: scale(1.2);
+}
+
+.container {
+    position: relative;
+}

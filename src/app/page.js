@@ -14,27 +14,32 @@ import Image from 'next/image'
 
 export default function Home() {
     let tagsSearch = []
-    const [state, dispatch] = useReducer(reducer, {
+
+    const initialState = {
         search: "",
         filters: {ingredients:[], ustensils:[], appareils:[]}
-    })
-    state.filters.ingredients.forEach(ingredient => tagsSearch.push({value: ingredient, type:"ingredients"}))
-    state.filters.ustensils.forEach(ustensil => tagsSearch.push({value: ustensil, type:"ustensils"}))
-    state.filters.appareils.forEach(appareil => tagsSearch.push({value: appareil, typeof:"appareils"}))
-    const displayedRecipes = filterRecipes(state, allRecipes)
-    const displayedTags = updateTags(state, displayedRecipes)
-    const recipesNumber = displayedRecipes.length
+    }
+   
+    const [state, dispatch] = useReducer(reducer, initialState)
+    const [mounted, setMounted] = useState(false)
     const [tagMenuOpen, setTagMenuOpen] = useState(null)
     const menuRefs = useRef([])
-    
-    /**
-     * Supprime le tag sélectionné pour la recherche et déclenche la mise à jour du state pour redéfinir les tags à afficher
-    */
-    function deleteTag(event) {
-        const name = event.target.dataset.type
-        const value = event.target.dataset.value
-        dispatch({type:"tag", name, value, mode:"removal"})
-    }
+
+    useEffect(() => {
+        setMounted(true)
+        const saved = sessionStorage.getItem("state")
+        if (saved) {
+            dispatch({
+                type: "loaded",
+                payload: JSON.parse(saved)
+            })
+        }
+    }, [])
+
+    useEffect(() => {
+        if (!mounted) return 
+        sessionStorage.setItem("state", JSON.stringify(state))
+    }, [state, mounted])
 
     useEffect(() => {
         function handleClick(event) {
@@ -48,12 +53,35 @@ export default function Home() {
             document.removeEventListener("mousedown", handleClick)
         }
     }, [])
+    
+    if (!mounted) return null
+        
+    state.filters.ingredients.forEach(ingredient => tagsSearch.push({value: ingredient, type:"ingredients"}))
+    state.filters.ustensils.forEach(ustensil => tagsSearch.push({value: ustensil, type:"ustensils"}))
+    state.filters.appareils.forEach(appareil => tagsSearch.push({value: appareil, typeof:"appareils"}))
+    const ingredientsTags = state.filters.ingredients
+    const ustensilsTags = state.filters.ustensils
+    const appareilsTags = state.filters.appareils
+    const displayedRecipes = filterRecipes(state, allRecipes)
+    const displayedTags = updateTags(state, displayedRecipes)
+    const recipesNumber = displayedRecipes.length
+    
+    /**
+     * Supprime le tag sélectionné pour la recherche et déclenche la mise à jour du state pour redéfinir les tags à afficher
+    */
+    function deleteTag(event) {
+        const name = event.target.dataset.type
+        const value = event.target.dataset.value
+        dispatch({type:"tag", name, value, mode:"removal"})
+    }
+
+    
 
     return (
         <div className={styles.mainContainer}>
             <div className={styles.bannerContent}>
                 <BannerUp/>
-                <Banner onSearchChange={value => dispatch({type:"search", value})}/>
+                <Banner onSearchChange={value => dispatch({type:"search", value})} search={state.search}/>
             </div>
             <TagForm 
                 allTags={displayedTags} 
@@ -64,6 +92,9 @@ export default function Home() {
                 setTagMenuOpen={setTagMenuOpen}
                 menuRefs={menuRefs}
                 tagsSearch={tagsSearch}
+                ingredientsTags={ingredientsTags}
+                ustensilsTags={ustensilsTags}
+                appareilsTags={appareilsTags}
             />
             <div className={styles.tagCollector}>
                 { tagsSearch != null && (

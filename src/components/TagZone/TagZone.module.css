@@ -2,7 +2,7 @@
     width: 195px;
     background: white;
     border-radius: 11px;
-    z-index:2;
+    z-index:3;
     position: relative;
     overflow: hidden
 }

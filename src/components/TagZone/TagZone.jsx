@@ -2,7 +2,7 @@ import styles from './TagZone.module.css'
 import Image from 'next/image'
 import { useState, useRef, useEffect } from 'react'
 
-export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle, refProp, tagsSearch}) {
+export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle, refProp, tagsSearch, searchTags}) {
     
     // Initialisation des constantes globales
     const [tagSearch, setTagSearch] = useState([])          // présence ou non d'un tag sélectionné parmi la liste des propositions
@@ -44,7 +44,6 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
         if(isOpen) inputRef.current.focus()
     }, [isOpen])
 
-    console.log(tagSearch)
     return (
         <div className={styles.tagContainer}>
             <div className={styles.tagZone}>
@@ -59,8 +58,8 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
                             <Image height={14} width={14} alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
                             { isSearch != '' && (<Image height={6} width={6} alt="cross" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
                         </div>
-                        { tagSearch.length > 0 && (
-                            tagSearch.map(tag => (
+                        { searchTags.length > 0 && (
+                            searchTags.map(tag => (
                                 <div key={tag} className={isSearch ? styles.tagSearchNotEmpty : styles.tagSearch}>
                                     {tag}
                                     <div className={styles.deleteTag} data-name={tag} onClick={removeSelectedTag}>
@@ -69,11 +68,7 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
                                 </div>
                             ))
                         )}
-                        {tagsSearch.legnth > 0 && (
-                            tagsSearch.map(tago => (
-                                <p key={tago}>{tago}</p>
-                            ))
-                        )}
+                        
                         <ul className={styles.tagZoneProposals}>
                             {filteredTags.map(tag => (
                                 <li className={styles.tagZoneProposal} key={tag} onClick={selectTag}>{tag}</li>

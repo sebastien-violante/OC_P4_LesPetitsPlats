@@ -1,7 +1,6 @@
 // recoit le nouveau state de tags et les recettes affichées et déclenceh l'affichage des recettes filtrées
 export default function filterRecipes(state, allRecipes) {
         
-    console.log(state)
     let filteredRecipes = allRecipes
     if(state.search && state.search.length > 2) {
         const value = state.search.toLowerCase()
