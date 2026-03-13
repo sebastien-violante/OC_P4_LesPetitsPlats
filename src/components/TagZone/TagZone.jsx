@@ -1,13 +1,14 @@
 import styles from './TagZone.module.css'
 import Image from 'next/image'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, useMemo } from 'react'
 
-export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle, refProp, tagsSearch, searchTags}) {
+export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle, refProp, searchTags}) {
     
     // Initialisation des constantes globales
-    const [tagSearch, setTagSearch] = useState([])          // présence ou non d'un tag sélectionné parmi la liste des propositions
     const [isSearch, setIsSearch] = useState('')            // valeur saisie dans le champ de recherche du tag
-    const filteredTags = tags.filter(tag => tag.toLowerCase().includes(isSearch.toLowerCase()))  // tags filtrés en fonction de la valeur du champ de saisie
+    const filteredTags = useMemo(() => {
+        return tags.filter(tag => tag.toLowerCase().includes(isSearch.toLowerCase())) 
+    }, [tags,isSearch]) 
     const number = filteredTags.length                      // nécessaire à l'affichage du nombre de recettes
     const inputRef = useRef(null)
   
@@ -24,22 +25,25 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
      * Permet l'affichage du tag sélectionné et déclenche la mise à jour du state pour redéfinir les tags à afficher
      * @param {Event} event - évènement déclenché par le champ input
     */
-    function selectTag (event) {
-        setTagSearch([...tagSearch, event.target.innerText])
-        onTagChange(name, event.target.innerText)  
+    function selectTag(tag) {
+        console.log('NAME ET TAG')
+        console.log(tag)
+        console.log(name)
+        onTagChange(name, tag)
+        deleteSearch()  
     }
   
     function removeSelectedTag(event) {
         onTagChange(name, event.target.dataset.name, "removal")
-        setTagSearch(tagSearch.filter(tag => tag.toLowerCase() != event.target.dataset.name.toLowerCase()))
     }
+
     /**
      * Supprime la recherche effectuée dans le champ de la tagZone
     */
     function deleteSearch () {
         setIsSearch('')
     }
-
+    
     useEffect(() => {
         if(isOpen) inputRef.current.focus()
     }, [isOpen])
@@ -71,7 +75,7 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
                         
                         <ul className={styles.tagZoneProposals}>
                             {filteredTags.map(tag => (
-                                <li className={styles.tagZoneProposal} key={tag} onClick={selectTag}>{tag}</li>
+                                <li className={styles.tagZoneProposal} key={tag} onClick={() => selectTag(tag)}>{tag}</li>
                             ))}
                         </ul>
                     </div>

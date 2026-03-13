@@ -58,14 +58,14 @@ export default function Home() {
         
     state.filters.ingredients.forEach(ingredient => tagsSearch.push({value: ingredient, type:"ingredients"}))
     state.filters.ustensils.forEach(ustensil => tagsSearch.push({value: ustensil, type:"ustensils"}))
-    state.filters.appareils.forEach(appareil => tagsSearch.push({value: appareil, typeof:"appareils"}))
+    state.filters.appareils.forEach(appareil => tagsSearch.push({value: appareil, type:"appareils"}))
     const ingredientsTags = state.filters.ingredients
     const ustensilsTags = state.filters.ustensils
     const appareilsTags = state.filters.appareils
     const displayedRecipes = filterRecipes(state, allRecipes)
     const displayedTags = updateTags(state, displayedRecipes)
     const recipesNumber = displayedRecipes.length
-    
+    console.log(displayedTags)
     /**
      * Supprime le tag sélectionné pour la recherche et déclenche la mise à jour du state pour redéfinir les tags à afficher
     */
@@ -91,7 +91,6 @@ export default function Home() {
                 tagMenuOpen={tagMenuOpen}
                 setTagMenuOpen={setTagMenuOpen}
                 menuRefs={menuRefs}
-                tagsSearch={tagsSearch}
                 ingredientsTags={ingredientsTags}
                 ustensilsTags={ustensilsTags}
                 appareilsTags={appareilsTags}
