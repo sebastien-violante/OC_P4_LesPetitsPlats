@@ -8,7 +8,7 @@ export default function RecipeCard({slug, image, name, time, description, ingred
     return(
         <Link href={`/recipe/${slug}`} className={styles.recipeCard}>
             <div className={styles.recipeCardHeader}>
-                    <Image className={styles.recipeImage} src={`/images/recipes/${image}`} alt={name} fill/>
+                    <Image height={253} width={380} className={styles.recipeImage} src={`/images/recipes/${image}`} alt={name} priority/>
                     <div className={styles.recipeTimeTag}>{time}min</div>
                 </div>
                 <div className={styles.recipeContent}>

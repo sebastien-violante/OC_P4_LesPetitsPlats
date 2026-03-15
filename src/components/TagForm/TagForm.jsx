@@ -1,5 +1,4 @@
 import styles from './TagForm.module.css'
-import TagSelect from '../TagSelect/TagSelect'
 import TagZone from '../TagZone/TagZone'
 
 export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpen, setTagMenuOpen, menuRefs, ingredientsTags, ustensilsTags, appareilsTags}) {
