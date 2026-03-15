@@ -7,10 +7,6 @@
     height: 128px;
 }
 
-.bannerUpImage {
-    z-index: 2;
-}
-
 .bannerDown, .bannerDownNotFound {
     width: 100%;
     height: 539px;

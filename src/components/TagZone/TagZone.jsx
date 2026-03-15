@@ -26,9 +26,6 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
      * @param {Event} event - évènement déclenché par le champ input
     */
     function selectTag(tag) {
-        console.log('NAME ET TAG')
-        console.log(tag)
-        console.log(name)
         onTagChange(name, tag)
         deleteSearch()  
     }
@@ -51,15 +48,15 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
     return (
         <div className={styles.tagContainer}>
             <div className={styles.tagZone}>
-                <div className={styles.tagZoneHeader}>
+                <div className={styles.tagZoneHeader} onClick={toggle}>
                     <p className={styles.tagZoneTitle}>{label} - {number}</p>
-                    <Image height={6} width={13} alt="arrow" className={isOpen ? styles.tagZoneArrowUp : styles.tagZoneArrowDown} src="/logos/downArrow.png" onClick={toggle}/>
+                    <img alt="ouvrir ou fermer la liste" className={isOpen ? styles.tagZoneArrowUp : styles.tagZoneArrowDown} src="/logos/downArrow.png"/>
                 </div>
                 {isOpen && (
                     <div className={styles.tagZoneBottom} ref={refProp}>
                         <div className={styles.tagZoneInput}>
                             <input type="text" className={styles.tagZoneInputField} onChange={handleSearch} value={isSearch} ref={inputRef}/>
-                            <Image height={14} width={14} alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
+                            <img alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
                             { isSearch != '' && (<Image height={6} width={6} alt="cross" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
                         </div>
                         { searchTags.length > 0 && (

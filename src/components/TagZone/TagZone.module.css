@@ -31,10 +31,8 @@
     top: 50%;
     transform: translateY(-50%);  
     cursor: pointer;
-}
-
-.tagZoneArrowDown:hover { 
-    transform: scale(1.5)
+    height: 6px;
+    width: 13px;
 }
 
 .tagZoneArrowUp {
@@ -43,6 +41,8 @@
     top: 50%;
     transform: translateY(-50%) rotate(180deg);  
     cursor: pointer;
+    height: 6px;
+    width: 13px;
 }
 
 .tagZoneInputField {
@@ -60,6 +60,8 @@
     position: absolute;
     right: 25px;
     top: 50%;
+    height: 14px;
+    width: 14px;
     transform: translateY(-50%);
 }
 

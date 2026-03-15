@@ -65,7 +65,6 @@ export default function Home() {
     const displayedRecipes = filterRecipes(state, allRecipes)
     const displayedTags = updateTags(state, displayedRecipes)
     const recipesNumber = displayedRecipes.length
-    console.log(displayedTags)
     /**
      * Supprime le tag sélectionné pour la recherche et déclenche la mise à jour du state pour redéfinir les tags à afficher
     */
