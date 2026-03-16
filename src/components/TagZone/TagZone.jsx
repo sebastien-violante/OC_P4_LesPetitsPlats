@@ -2,14 +2,17 @@ import styles from './TagZone.module.css'
 import Image from 'next/image'
 import { useState, useRef, useEffect, useMemo } from 'react'
 
-export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle, refProp, searchTags}) {
+export default function TagZone({label, items,  onTagChange, name, isOpen, toggle, refProp, tags}) {
     
     // Initialisation des constantes globales
-    const [isSearch, setIsSearch] = useState('')            // valeur saisie dans le champ de recherche du tag
-    const filteredTags = useMemo(() => {
-        return tags.filter(tag => tag.toLowerCase().includes(isSearch.toLowerCase())) 
-    }, [tags,isSearch]) 
-    const number = filteredTags.length                      // nécessaire à l'affichage du nombre de recettes
+    const [isSearch, setIsSearch] = useState('')   
+    
+    
+    
+    // valeur saisie dans le champ de recherche du tag
+    const filteredItems = useMemo(() => {
+        return items.filter(item => item.toLowerCase().includes(isSearch.toLowerCase())) 
+    }, [items,isSearch]) 
     const inputRef = useRef(null)
   
        
@@ -49,18 +52,18 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
         <div className={styles.tagContainer}>
             <div className={styles.tagZone}>
                 <div className={styles.tagZoneHeader} onClick={toggle}>
-                    <p className={styles.tagZoneTitle}>{label} - {number}</p>
+                    <p className={styles.tagZoneTitle}>{label}</p>
                     <img alt="ouvrir ou fermer la liste" className={isOpen ? styles.tagZoneArrowUp : styles.tagZoneArrowDown} src="/logos/downArrow.png"/>
                 </div>
-                {isOpen && (
-                    <div className={styles.tagZoneBottom} ref={refProp}>
+                
+                    <div className={`${styles.tagZoneBottom} ${isOpen ? styles.tagZoneBottomExpanded : ""}`}   ref={refProp}>
                         <div className={styles.tagZoneInput}>
                             <input type="text" className={styles.tagZoneInputField} onChange={handleSearch} value={isSearch} ref={inputRef}/>
                             <img alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
                             { isSearch != '' && (<Image height={6} width={6} alt="cross" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
                         </div>
-                        { searchTags.length > 0 && (
-                            searchTags.map(tag => (
+                        { tags.length > 0 && (
+                            tags.map(tag => (
                                 <div key={tag} className={isSearch ? styles.tagSearchNotEmpty : styles.tagSearch}>
                                     {tag}
                                     <div className={styles.deleteTag} data-name={tag} onClick={removeSelectedTag}>
@@ -69,14 +72,13 @@ export default function TagZone({label, tags,  onTagChange, name, isOpen, toggle
                                 </div>
                             ))
                         )}
-                        
                         <ul className={styles.tagZoneProposals}>
-                            {filteredTags.map(tag => (
-                                <li className={styles.tagZoneProposal} key={tag} onClick={() => selectTag(tag)}>{tag}</li>
+                            {filteredItems.map(item => (
+                                <li className={styles.tagZoneProposal} key={item} onClick={() => selectTag(item)}>{item}</li>
                             ))}
                         </ul>
                     </div>
-                )}
+              
             </div>            
         </div>
     )

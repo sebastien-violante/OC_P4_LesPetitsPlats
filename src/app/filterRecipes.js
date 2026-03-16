@@ -1,4 +1,9 @@
-// recoit le nouveau state de tags et les recettes affichées et déclenceh l'affichage des recettes filtrées
+/**
+* Recoit le nouveau state de filtres et les recettes affichées et déclenche l'affichage des recettes filtrées
+* @param {Object} state - le state actuel
+* @param {array} allRecipes - le tableau contenant toutes les recettes du site
+* @return {array} filteredRecipes le tableau de recettes filtré
+*/
 export default function filterRecipes(state, allRecipes) {
         
     let filteredRecipes = allRecipes
@@ -27,7 +32,7 @@ export default function filterRecipes(state, allRecipes) {
     if(state.filters.appareils) {
         filteredRecipes = filteredRecipes.filter((recipe) => {
             const isInAppareils = 
-            state.filters.appareils.lenght === 0 ||
+            state.filters.appareils.length === 0 ||
             state.filters.appareils.every((filterAppareil) =>
                 recipe.appliance.toLowerCase() === filterAppareil.toLowerCase())     
         return isInAppareils
