@@ -146,3 +146,14 @@
     transform: rotate(90deg);
 }
 
+.tagZoneBottom {
+    height: 0px;
+    transition: height 0.4s ease-in-out;
+}
+
+.tagZoneBottomExpanded {
+    height: 286px;
+}
+
+
+

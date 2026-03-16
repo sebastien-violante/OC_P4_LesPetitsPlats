@@ -78,13 +78,13 @@
 
 .arrowBack {
     position: absolute;
-    bottom: 180px;
+    top: 150px;
     right: 10px;
     cursor: pointer;
 }
 
 .arrowBack:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
 
 .container {

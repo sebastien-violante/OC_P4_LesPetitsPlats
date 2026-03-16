@@ -1,7 +1,7 @@
 import styles from './TagForm.module.css'
 import TagZone from '../TagZone/TagZone'
 
-export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpen, setTagMenuOpen, menuRefs, ingredientsTags, ustensilsTags, appareilsTags}) {
+export default function TagForm({items, onTagChange, recipesNumber, tagMenuOpen, setTagMenuOpen, menuRefs, tags}) {
 
     let recettes = recipesNumber <=1 ? " recette" : " recettes"
    
@@ -11,32 +11,32 @@ export default function TagForm({allTags, onTagChange, recipesNumber, tagMenuOpe
                 <TagZone 
                     label={"Ingredients"} 
                     onTagChange={onTagChange} 
-                    tags={allTags.ingredients} 
+                    items={items.ingredients} 
                     name={"ingredients"} 
                     isOpen={tagMenuOpen === "menuIngredients"}
                     toggle={() => setTagMenuOpen(prev => prev==="menuIngredients" ? null : "menuIngredients")}
                     refProp={el => (menuRefs.current[0] = el)}
-                    searchTags={ingredientsTags}
+                    tags={tags.ingredients}
                     />
                 <TagZone 
                     label={"Appareils"} 
                     onTagChange={onTagChange} 
-                    tags={allTags.appareils} 
+                    items={items.appareils} 
                     name={"appareils"} 
                     isOpen={tagMenuOpen === "menuAppareils"}
                     toggle={() => setTagMenuOpen(prev => prev==="menuAppareils" ? null : "menuAppareils")}
                     refProp={el => (menuRefs.current[1] = el)}
-                    searchTags={appareilsTags}
+                    tags={tags.appareils}
                     />
                 <TagZone 
                     label={"Ustensiles"} 
                     onTagChange={onTagChange} 
-                    tags={allTags.ustensils} 
+                    items={items.ustensils} 
                     name={"ustensils"} 
                     isOpen={tagMenuOpen === "menuUstensils"}
                     toggle={() => setTagMenuOpen(prev => prev==="menuUstensils" ? null : "menuUstensils")}
                     refProp={el => (menuRefs.current[2] = el)}
-                    searchTags={ustensilsTags}
+                    tags={tags.ustensils}
                     />
             </div>     
             <p className={styles.recipesQuantity}>{recipesNumber} {recettes}</p>

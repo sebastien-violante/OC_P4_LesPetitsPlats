@@ -7,40 +7,57 @@ import Footer from '../components/Footer/Footer'
 import TagForm from '../components/TagForm/TagForm'
 import RecipeCard from '../components/RecipeCard/RecipeCard'
 import allRecipes from '../data/recipes.json'
-import updateTags from './updateTags'
+import updateItems from './updateItems'
 import filterRecipes from './filterRecipes'
 import reducer from './reducer'
 import Image from 'next/image'
 
 export default function Home() {
-    let tagsSearch = []
-
+    
+    const menuRefs = useRef([]) 
+    
+    // Etat initial du state au premier chargement
     const initialState = {
         search: "",
         filters: {ingredients:[], ustensils:[], appareils:[]}
     }
-   
-    const [state, dispatch] = useReducer(reducer, initialState)
-    const [mounted, setMounted] = useState(false)
-    const [tagMenuOpen, setTagMenuOpen] = useState(null)
-    const menuRefs = useRef([])
 
+    // Définition du state et de sa méthode d'affectation
+    const [state, dispatch] = useReducer(reducer, initialState)
+
+    // Gestion du state en fonction du montage du composante et de l'existence d'un state en session
+    const [mounted, setMounted] = useState(false) 
+        // Pour le montage initial
     useEffect(() => {
         setMounted(true)
-        const saved = sessionStorage.getItem("state")
-        if (saved) {
+        const savedState = sessionStorage.getItem("state")
+        if (savedState) {
             dispatch({
                 type: "loaded",
-                payload: JSON.parse(saved)
+                payload: JSON.parse(savedState)
             })
         }
     }, [])
-
+    
+        // A chaque changement de state ou de montage
     useEffect(() => {
         if (!mounted) return 
         sessionStorage.setItem("state", JSON.stringify(state))
     }, [state, mounted])
 
+    // Remplissage d'un tableau de tags destiné à l'affichage des filtres appliqués
+    let tagsSearch = []  
+    state.filters.ingredients.forEach(ingredient => tagsSearch.push({value: ingredient, type:"ingredients"}))
+    state.filters.ustensils.forEach(ustensil => tagsSearch.push({value: ustensil, type:"ustensils"}))
+    state.filters.appareils.forEach(appareil => tagsSearch.push({value: appareil, type:"appareils"}))
+    
+    // Détermination des recettes à afficher et des items proposés en fonction du state
+    const displayedRecipes = filterRecipes(state, allRecipes)
+    const recipesNumber = displayedRecipes.length
+    const items = updateItems(state, displayedRecipes)
+    
+    // Gestion de l'état ouvert/fermé de la zone de liste des items (ingrédients, appareils, ustensiles)
+    const [tagMenuOpen, setTagMenuOpen] = useState(null) 
     useEffect(() => {
         function handleClick(event) {
             const clickedInside = menuRefs.current.some(ref => ref?.contains(event.target))
@@ -54,28 +71,20 @@ export default function Home() {
         }
     }, [])
     
-    if (!mounted) return null
-        
-    state.filters.ingredients.forEach(ingredient => tagsSearch.push({value: ingredient, type:"ingredients"}))
-    state.filters.ustensils.forEach(ustensil => tagsSearch.push({value: ustensil, type:"ustensils"}))
-    state.filters.appareils.forEach(appareil => tagsSearch.push({value: appareil, type:"appareils"}))
-    const ingredientsTags = state.filters.ingredients
-    const ustensilsTags = state.filters.ustensils
-    const appareilsTags = state.filters.appareils
-    const displayedRecipes = filterRecipes(state, allRecipes)
-    const displayedTags = updateTags(state, displayedRecipes)
-    const recipesNumber = displayedRecipes.length
-    /**
-     * Supprime le tag sélectionné pour la recherche et déclenche la mise à jour du state pour redéfinir les tags à afficher
+    
+    
+   /**
+    * Supprime un filtre et déclenche un nouveau calcul de state
+    * @param {Event} event l'élément déclencheur
     */
     function deleteTag(event) {
-        const name = event.target.dataset.type
-        const value = event.target.dataset.value
+        const name = event.currentTarget.dataset.type
+        const value = event.currentTarget.dataset.value
         dispatch({type:"tag", name, value, mode:"removal"})
     }
 
+    if (!mounted) return null
     
-
     return (
         <div className={styles.mainContainer}>
             <div className={styles.bannerContent}>
@@ -83,29 +92,36 @@ export default function Home() {
                 <Banner onSearchChange={value => dispatch({type:"search", value})} search={state.search}/>
             </div>
             <TagForm 
-                allTags={displayedTags} 
+                items={items} 
                 recipesNumber={recipesNumber} 
                 recipesSearch={state.search} 
                 onTagChange={(name, value, mode) => dispatch({type:"tag", name, value, mode})}
                 tagMenuOpen={tagMenuOpen}
                 setTagMenuOpen={setTagMenuOpen}
                 menuRefs={menuRefs}
-                ingredientsTags={ingredientsTags}
-                ustensilsTags={ustensilsTags}
-                appareilsTags={appareilsTags}
+                tags={state.filters}
             />
             <div className={styles.tagCollector}>
                 { tagsSearch != null && (
                 tagsSearch.map(tag => (
                     <div key={tag.value} className={styles.deportedTag}>
                         <p>{tag.value}</p>
-                        <Image height={10} data-type={tag.type} data-value={tag.value} className={styles.bigCross} width={10} alt="cross" src="/logos/bigCross.png" onClick={deleteTag}/>
+                        <Image 
+                            height={10} 
+                            width={10} 
+                            data-type={tag.type} 
+                            data-value={tag.value} 
+                            className={styles.bigCross}  
+                            alt="cross" 
+                            src="/logos/bigCross.png" 
+                            onClick={deleteTag}
+                        />
                     </div>
                 ))
             )}
             </div>
             <div className={styles.recipeContainer}>
-                {displayedRecipes.length === 0 && (<p className={styles.noRecipeMessage}>Aucune recette ne contient <span className={styles.spanNoRecipeMessage}>{state.search}</span>. Vous pouvez chercher "tarte aux pommes", "poisson", etc</p>)}
+                {(displayedRecipes.length === 0 && state.search.length > 2) && (<p className={styles.noRecipeMessage}>Aucune recette ne contient <span className={styles.spanNoRecipeMessage}>{state.search}</span>. Vous pouvez chercher "tarte aux pommes", "poisson", etc</p>)}
                 {displayedRecipes.length >= 0 && (
                     displayedRecipes.map(recipe => (
                     <RecipeCard key={recipe.id} {...recipe} />

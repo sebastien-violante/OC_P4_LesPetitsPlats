@@ -1,31 +1,33 @@
 /**
- * Trie un tableau de données par ordre alphabétique (français) et supprime l'item donné dans ce tableau
- * Permet de mettre à jour les tags après changement d'un des paramètres de state et de ne plus faire apparaître dans la 
- * liste des propositions le tag qui a donné lieu à cette mise à jour
+ * Trie un tableau de données par ordre alphabétique (français) et supprime les items donés en second paramètre
  * @param {array} array le tableau de valeurs
- * @param {string} item la valeur à supprimer dans le tableau
+ * @param {string} item les valeurs à supprimer parmi les items car ce sont déjà des tags
  * @return {array} le tableau trié ne contenant plus item
  */
-function sortAndFilter(array, item) {
+function sortAndFilter(array, items) {
     // initialisation d'un Set pour assurer l'unicité des données qui sont comparées en lowerCase
     const tempSet = new Set
     array.sort((a,b) => a.localeCompare(b, 'fr', {sensibility: 'base'}))
-    array.forEach(item => tempSet.add(item.charAt(0).toUpperCase()+item.slice(1).toLowerCase()))
+    array.forEach(data => tempSet.add(data.charAt(0).toUpperCase()+data.slice(1).toLowerCase()))
     // Suppression des tags sélectionnés de la liste des tags encore proposés
-    if(item) {
-        item.forEach(data => tempSet.delete(data))
+    if(items) {
+        items.forEach(item => tempSet.delete(item))
     }
     return [...tempSet]
 }
 
-export default function updateTags(state, recipes) {
+/**
+ * Trie un tableau de données par ordre alphabétique (français) et supprime l'item donné dans ce tableau
+ * @param {Object} state le state actuel
+ * @param {Object} recipes la liste des recettes à afficher
+ * @return {array} la liste des items (ingrédients, appareils et ustensils)
+ */
+export default function updateItems(state, recipes) {
 
-    // Initialisation des tags
     const ingredients = []
     const ustensils = []
     const appareils = []
 
-    // Bouclage sur tableau de recettes pour remplir les ingrédients, ustensils et accessoires
     recipes.forEach(recipe => {
         appareils.push(recipe.appliance)
         recipe.ingredients.forEach(item => {

@@ -79,4 +79,9 @@
     top: 50%;
     transform: translate(-50%)
 }
-
+ .backToMenu {
+    color: #FFD15B;
+    font-size: 20px;
+    margin-top: 40px;
+    font-weight: bold;
+ }
