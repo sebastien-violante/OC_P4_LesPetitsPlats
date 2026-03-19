@@ -63,14 +63,18 @@
     background: white;
     text-align: start;
     flex: 1;
-    -webkit-appearance: searchfield;
 }
 
-.searchSubmit {
+.bannerDown .searchSubmit {
     height: 50px;
     width: 50px;
     overflow: hidden;
     border-radius: 10px;
+}
+
+.bannerDown .deleteSearchCross {
+    cursor: pointer;
+    margin-right: 24px;
 }
 
 .tagZoneCross {
@@ -84,4 +88,5 @@
     font-size: 20px;
     margin-top: 40px;
     font-weight: bold;
+    font-family: var(--font-manrope);
  }

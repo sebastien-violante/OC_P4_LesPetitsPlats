@@ -5,7 +5,7 @@ export default function BannerUp() {
 
     return (
         <div className={styles.bannerUp}>
-                <Image width={180} height={25} className={styles.bannerUpImage} src="/logos/lesPetitsPlats.png" alt="site Les Petits Plats" priority/>
+                <Image width={180} height={25} className={styles.bannerUpImage} src="/logos/lesPetitsPlats.png" alt="site Les Petits Plats" preload={true}/>
         </div>  
     )
 }
