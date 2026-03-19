@@ -52,30 +52,28 @@ export default function TagZone({label, items,  onTagChange, name, isOpen, toggl
                     <p className={styles.tagZoneTitle}>{label}</p>
                     <img alt="ouvrir ou fermer la liste" className={isOpen ? styles.tagZoneArrowUp : styles.tagZoneArrowDown} src="/logos/downArrow.png" onClick={toggle}/>
                 </div>
-                
-                    <div className={`${styles.tagZoneBottom} ${isOpen ? styles.tagZoneBottomExpanded : ""}`}   ref={refProp}>
-                        <div className={styles.tagZoneInput}>
-                            <input type="search" className={styles.tagZoneInputField} onChange={handleSearch} value={isSearch} ref={inputRef}/>
-                            <img alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
-                            { isSearch != '' && (<img alt="effacer la recherche" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
-                        </div>
-                        { tags.length > 0 && (
-                            tags.map(tag => (
-                                <div key={tag} className={styles.tagSearch}>
-                                    {tag}
-                                    <div className={styles.deleteTag} data-name={tag} onClick={removeSelectedTag}>
-                                        <img  data-name={tag} className={styles.deleteTagCross} src="/logos/deleteTag.png" alt="delete tag"/>
-                                    </div>
-                                </div>
-                            ))
-                        )}
-                        <ul className={styles.tagZoneProposals}>
-                            {filteredItems.map(item => (
-                                <li className={styles.tagZoneProposal} key={item} onClick={() => selectTag(item)}>{item}</li>
-                            ))}
-                        </ul>
+                <div className={`${styles.tagZoneBottom} ${isOpen ? styles.tagZoneBottomExpanded : ""}`}   ref={refProp}>
+                    <div className={styles.tagZoneInput}>
+                        <input type="search" className={styles.tagZoneInputField} onChange={handleSearch} value={isSearch} ref={inputRef}/>
+                        <img alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
+                        { isSearch != '' && (<img alt="effacer la recherche" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
                     </div>
-              
+                    { tags.length > 0 && (
+                        tags.map(tag => (
+                            <div key={tag} className={styles.tagSearch}>
+                                {tag}
+                                <div className={styles.deleteTag} data-name={tag} onClick={removeSelectedTag}>
+                                    <img  data-name={tag} className={styles.deleteTagCross} src="/logos/deleteTag.png" alt="delete tag"/>
+                                </div>
+                            </div>
+                        ))
+                    )}
+                    <ul className={styles.tagZoneProposals}>
+                        {filteredItems.map(item => (
+                            <li className={styles.tagZoneProposal} key={item} onClick={() => selectTag(item)}>{item}</li>
+                        ))}
+                    </ul>
+                </div>
             </div>            
         </div>
     )
