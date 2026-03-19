@@ -69,7 +69,14 @@
     position: absolute;
     right: 51px;
     top: 50%;
+    height: 6px;
+    width: 6px;
     transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.tagZoneCross:hover {
+    transform: scale(1.1);
 }
 
 .tagZoneProposals {
@@ -127,6 +134,11 @@
     cursor: pointer;
 }
 
+.deleteTagCross {
+    height: 17px;
+    width: 17px;
+}
+
 .tagSearch:hover .deleteTag {
     opacity: 1;
 }
@@ -148,7 +160,7 @@
 
 .tagZoneBottom {
     height: 0px;
-    transition: height 0.4s ease-in-out;
+    transition: height 0.2s ease-in-out;
 }
 
 .tagZoneBottomExpanded {

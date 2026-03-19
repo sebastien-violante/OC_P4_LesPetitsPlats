@@ -8,11 +8,11 @@ export default function filterRecipes(state, allRecipes) {
         
     let filteredRecipes = allRecipes
     if(state.search && state.search.length > 2) {
-        const value = state.search.toLowerCase()
+        const value = state.search.trim().toLowerCase()
         filteredRecipes = filteredRecipes.filter((recipe) => {
             const isInName = recipe.name?.toLowerCase().includes(value)
             const isInDescription = recipe.description?.toLowerCase().includes(value)
-            const isInIngredients = recipe.ingredients?.some((item) => item.ingredient?.toLowerCase() === (value))
+            const isInIngredients = recipe.ingredients?.some((item) => item.ingredient?.toLowerCase().includes(value))
             return isInName || isInDescription || isInIngredients 
         })
     } 
@@ -49,10 +49,8 @@ export default function filterRecipes(state, allRecipes) {
                        item.toLowerCase().includes(filterUstensil.toLowerCase()) 
                 ))
         return isInUstensils
-        
         })
     }
-
     return (filteredRecipes)  
 
 }

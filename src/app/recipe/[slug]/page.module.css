@@ -10,16 +10,14 @@
 }
 
 .recipeImageWrapper {
-    width: 606px;
-    height: 738px;
     margin: 0 auto;
     position: relative;
-    border-radius: 21px;
     overflow: hidden;
 }
 
 .recipeImage {
     object-fit: cover;
+    border-radius: 21px;
 }
 
 .recipeTitle {
@@ -80,6 +78,8 @@
     position: absolute;
     top: 150px;
     right: 10px;
+    height: 40px;
+    width: 40px;
     cursor: pointer;
 }
 

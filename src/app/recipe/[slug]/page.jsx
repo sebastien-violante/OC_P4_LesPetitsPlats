@@ -20,12 +20,12 @@ export default async function RecipeDetails({params}) {
                 <BannerUp/>
             </div>
             <Link href="/">
-            <Image className={styles.arrowBack} src={'/logos/arrowBack.png'} height={50} width={50} alt="retour à l'accueil"/>
+            <img className={styles.arrowBack} src={'/logos/arrowBack.png'} alt="retour à l'accueil"/>
             </Link>
             <div className={styles.recipeContainer}>
                 <div className={styles.recipeImageContainer}>
                     <div className={styles.recipeImageWrapper}>
-                        <Image className={styles.recipeImage} fill src={`/images/recipes/${recipe.image}`} alt={recipe.slug}/>
+                        <Image width={606} height={738} className={styles.recipeImage} src={`/images/recipes/${recipe.image}`} alt={recipe.name}/>
                     </div>
                 </div>
                 <div className={styles.recipeDetails}>
