@@ -1,5 +1,6 @@
 'use client'
-import { useReducer, useEffect, useState, useRef} from 'react'
+import { useEffect, useState, useRef } from 'react'
+import { useFilters } from './providers/StateProvider'
 import styles from './page.module.css'
 import BannerDown from '../components/Banner/BannerDown'
 import TagForm from '../components/TagForm/TagForm'
@@ -7,41 +8,13 @@ import RecipeCard from '../components/RecipeCard/RecipeCard'
 import allRecipes from '../data/recipes.json'
 import updateItems from './updateItems'
 import filterRecipes from './filterRecipes'
-import reducer from './reducer'
 import Image from 'next/image'
 
 export default function Home() {
     
     const menuRefs = useRef([]) 
     
-    // Etat initial du state au premier chargement
-    const initialState = {
-        search: "",
-        filters: {ingredients:[], ustensils:[], appareils:[]}
-    }
-
-    // Définition du state et de sa méthode d'affectation
-    const [state, dispatch] = useReducer(reducer, initialState)
-
-    // Gestion du state en fonction du montage du composante et de l'existence d'un state en session
-    const [mounted, setMounted] = useState(false) 
-        // Pour le montage initial
-    useEffect(() => {
-        setMounted(true)
-        const savedState = sessionStorage.getItem("state")
-        if (savedState) {
-            dispatch({
-                type: "loaded",
-                payload: JSON.parse(savedState)
-            })
-        }
-    }, [])
-    
-        // A chaque changement de state ou de montage
-    useEffect(() => {
-        if (!mounted) return 
-        sessionStorage.setItem("state", JSON.stringify(state))
-    }, [state, mounted])
+    const { state, dispatch } = useFilters()
 
     // Remplissage d'un tableau de tags destiné à l'affichage des filtres appliqués
     let tagsSearch = []  
@@ -69,8 +42,7 @@ export default function Home() {
         }
     }, [])
     
-    
-    
+        
    /**
     * Supprime un filtre et déclenche un nouveau calcul de state
     * @param {Event} event l'élément déclencheur
@@ -80,8 +52,6 @@ export default function Home() {
         const value = event.currentTarget.dataset.value
         dispatch({type:"tag", name, value, mode:"removal"})
     }
-
-    if (!mounted) return null
     
     return (
         <div className={styles.mainContainer}>
@@ -95,7 +65,7 @@ export default function Home() {
                 onTagChange={(name, value, mode) => dispatch({type:"tag", name, value, mode})}
                 tagMenuOpen={tagMenuOpen}
                 setTagMenuOpen={setTagMenuOpen}
-                menuRefs={menuRefs}
+                menuRefs={menuRefs}preload={true}
                 tags={state.filters}
             />
             <div className={styles.tagCollector}>

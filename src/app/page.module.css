@@ -43,3 +43,7 @@
     margin-top:20px;
     width: 195px;
 }
+
+.bigCross {
+    cursor: pointer;
+}
