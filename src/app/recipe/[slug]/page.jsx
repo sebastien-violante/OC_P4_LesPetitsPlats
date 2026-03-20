@@ -2,10 +2,8 @@ import styles from './page.module.css'
 import recipesArray from '@/src/data/recipes.json'
 import Image from  'next/image'
 import IngredientItem from '@/src/components/IngredientItem/IngredientItem'
-import Footer from '@/src/components/Footer/Footer'
 import UstensilItem from '@/src/components/UstensilItem/UstensilItem'
 import { notFound } from 'next/navigation'
-import BannerUp from '@/src/components/Banner/BannerUp'
 import Link from 'next/link'
 export default async function RecipeDetails({params}) {
 
@@ -17,7 +15,6 @@ export default async function RecipeDetails({params}) {
     return (
         <div className={styles.container}>
             <div className={styles.bannerContent}>
-                <BannerUp/>
             </div>
             <Link href="/">
             <img className={styles.arrowBack} src={'/logos/arrowBack.png'} alt="retour à l'accueil"/>
@@ -52,8 +49,6 @@ export default async function RecipeDetails({params}) {
                     </ol>
                 </div>
             </div>
-            <Footer />
         </div>
-        
     )
 }

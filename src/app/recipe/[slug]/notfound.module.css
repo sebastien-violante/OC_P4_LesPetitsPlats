@@ -7,7 +7,7 @@
 .bannerContentNotFound::before {
     content: "";
     position: absolute;
-    inset:0;
+    inset:-128px 0 0 0;
     background-image: url('/banner-picture.png');
     background-position:center;
     background-size: cover;

@@ -1,0 +1,11 @@
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 5px;
+    padding-left: 70px;
+    height: 128px;
+    width: 100%;
+    position: relative; 
+    background-image: url('/banner-picture.png');
+}

@@ -2,8 +2,6 @@
 import { useReducer, useEffect, useState, useRef} from 'react'
 import styles from './page.module.css'
 import BannerDown from '../components/Banner/BannerDown'
-import BannerUp from '../components/Banner/BannerUp'
-import Footer from '../components/Footer/Footer'
 import TagForm from '../components/TagForm/TagForm'
 import RecipeCard from '../components/RecipeCard/RecipeCard'
 import allRecipes from '../data/recipes.json'
@@ -88,7 +86,6 @@ export default function Home() {
     return (
         <div className={styles.mainContainer}>
             <div className={styles.bannerContent}>
-                <BannerUp/>
                 <BannerDown onSearchChange={value => dispatch({type:"search", value})} search={state.search}/>
             </div>
             <TagForm 
@@ -129,8 +126,6 @@ export default function Home() {
                 
                 
             </div>
-            <Footer />
-        </div>
-            
+        </div>     
     )
 }

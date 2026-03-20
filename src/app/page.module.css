@@ -11,11 +11,6 @@
     margin-bottom: 60px;
 }
 
-.bannerContent {
-    width: 100%;
-    position: relative; 
-    background-image: url('/banner-picture.png');
-}
 
 .noRecipeMessage {
     width: 100%;
