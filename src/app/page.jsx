@@ -47,26 +47,28 @@ export default function Home() {
     * Supprime un filtre et déclenche un nouveau calcul de state
     * @param {Event} event l'élément déclencheur
     */
-    function deleteTag(event) {
-        const name = event.currentTarget.dataset.type
-        const value = event.currentTarget.dataset.value
-        dispatch({type:"tag", name, value, mode:"removal"})
+    function removeTag(tag) {
+        dispatch({
+            type: "removeTag",
+            payload: {
+                category: tag.type,
+                tag : tag.value
+            }
+        })
     }
     
     return (
         <div className={styles.mainContainer}>
             <div className={styles.bannerContent}>
-                <BannerDown onSearchChange={value => dispatch({type:"search", value})} search={state.search}/>
+                <BannerDown/>
             </div>
             <TagForm 
                 items={items} 
                 recipesNumber={recipesNumber} 
                 recipesSearch={state.search} 
-                onTagChange={(name, value, mode) => dispatch({type:"tag", name, value, mode})}
                 tagMenuOpen={tagMenuOpen}
                 setTagMenuOpen={setTagMenuOpen}
                 menuRefs={menuRefs}preload={true}
-                tags={state.filters}
             />
             <div className={styles.tagCollector}>
                 { tagsSearch != null && (
@@ -76,12 +78,10 @@ export default function Home() {
                         <Image 
                             height={10} 
                             width={10} 
-                            data-type={tag.type} 
-                            data-value={tag.value} 
                             className={styles.bigCross}  
                             alt="cross" 
                             src="/logos/bigCross.png" 
-                            onClick={deleteTag}
+                            onClick={() => removeTag(tag)}
                         />
                     </div>
                 ))

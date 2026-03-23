@@ -1,7 +1,18 @@
+'use client'
+import { useFilters } from '@/src/app/providers/StateProvider'
 import styles from './Banner.module.css'
 import Image from 'next/image'
 
-export default function Banner({onSearchChange, search}) {
+export default function Banner() {
+
+    const { state, dispatch } = useFilters()
+    const search = state.search
+    function onSearchChange(value) {
+        dispatch({
+            type: "search",
+            payload: value
+        })
+    }
 
     return (
         <div className={styles.bannerDown}>

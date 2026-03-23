@@ -1,10 +1,13 @@
 'use client' 
 import styles from './TagZone.module.css'
 import { useState, useRef, useEffect, useMemo } from 'react'
+import { useFilters } from '@/src/app/providers/StateProvider'
 
-export default function TagZone({label, items,  onTagChange, name, isOpen, toggle, refProp, tags}) {
+
+export default function TagZone({label, items,  name, isOpen, toggle, refProp}) {
     
-    // Initialisation des constantes globales
+    const { state, dispatch } = useFilters()
+    const tags = state.filters[name]
     const [isSearch, setIsSearch] = useState('')   
     
     // valeur saisie dans le champ de recherche du tag
@@ -26,12 +29,24 @@ export default function TagZone({label, items,  onTagChange, name, isOpen, toggl
      * @param {Event} event - évènement déclenché par le champ input
     */
     function selectTag(tag) {
-        onTagChange(name, tag)
+        dispatch({
+            type: "addTag",
+            payload: {
+                category: name,
+                tag
+            }
+        })
         deleteSearch()  
     }
   
-    function removeSelectedTag(event) {
-        onTagChange(name, event.target.dataset.name, "removal")
+    function removeSelectedTag(tag) {
+        dispatch({
+            type: "removeTag",
+            payload: {
+                category: name,
+                tag
+            }
+        })
     }
 
     /**
@@ -62,7 +77,7 @@ export default function TagZone({label, items,  onTagChange, name, isOpen, toggl
                         tags.map(tag => (
                             <div key={tag} className={styles.tagSearch}>
                                 {tag}
-                                <div className={styles.deleteTag} data-name={tag} onClick={removeSelectedTag}>
+                                <div className={styles.deleteTag} onClick={() => removeSelectedTag(tag)}>
                                     <img  data-name={tag} className={styles.deleteTagCross} src="/logos/deleteTag.png" alt="delete tag"/>
                                 </div>
                             </div>
