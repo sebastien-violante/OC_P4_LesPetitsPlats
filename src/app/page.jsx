@@ -31,7 +31,6 @@ export default function Home() {
     const [tagMenuOpen, setTagMenuOpen] = useState(null) 
     useEffect(() => {
         function handleClick(event) {
-            console.log(menuRefs)
             const clickedInside = menuRefs.current.some(ref => ref?.contains(event.target))
             if (!clickedInside) {
                 setTagMenuOpen(null)

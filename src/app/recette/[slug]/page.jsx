@@ -5,11 +5,17 @@ import IngredientItem from '@/src/components/IngredientItem/IngredientItem'
 import UstensilItem from '@/src/components/UstensilItem/UstensilItem'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-export default async function RecipeDetails({params}) {
 
-    const { slug } = await params
-    const recipe = recipesArray.find(recipe => recipe.slug === slug)
+async function getRecipe(slug) {
+    return recipesArray.find(recipe => recipe.slug === slug) 
+}
+
+export default async function RecipeDetails({params}) {
+    const { slug } =  await params
+    const recipe = await getRecipe(slug)
+  
     if(!recipe) notFound()
+
     const recipeSteps = recipe.description?.split(/[,.;]/).map(step => step.trim()).filter(step => step !== '')
     
     return (

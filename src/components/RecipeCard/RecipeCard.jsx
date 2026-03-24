@@ -6,7 +6,7 @@ import Link from 'next/link'
 export default function RecipeCard({slug, image, name, time, description, ingredients}) {
     
     return(
-        <Link href={`/recipe/${slug}`} className={styles.recipeCard}>
+        <Link href={`/recette/${slug}`} className={styles.recipeCard}>
             <div className={styles.recipeCardHeader}>
                 <Image height={253} width={380} className={styles.recipeImage} src={`/images/recipes/${image}`} alt={name} priority/>
                 <div className={styles.recipeTimeTag}>{time}min</div>
