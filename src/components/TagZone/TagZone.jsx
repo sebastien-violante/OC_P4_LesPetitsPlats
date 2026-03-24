@@ -72,21 +72,30 @@ export default function TagZone({label, items,  name, isOpen, toggle, refProp}) 
                         onClick={toggle}/>
                 </div>
                 <div className={`${styles.tagZoneBottom} ${isOpen ? styles.tagZoneBottomExpanded : ""}`}   ref={refProp}>
-                    <div classN
-                        type="search" 
-                        className={styles.tagZoneInputField} 
-                        onChange={handleSearch} 
-                        value={isSearch} 
-                        ref={inputRef}/>
-                            <img alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
-                            { isSearch != '' && (<img alt="effacer la recherche" className={styles.tagZoneCross} src="/logos/cross.svg" onClick={deleteSearch}/>)}
+                    <div className={styles.tagZoneInput}>
+                        <input 
+                            type="search" 
+                            className={styles.tagZoneInputField} 
+                            onChange={handleSearch} 
+                            value={isSearch} 
+                            ref={inputRef}
+                        />
+                        <img alt="loop" className={styles.tagZoneLoop} src="/logos/loop.svg"/>
+                        { isSearch != '' && (
+                            <img 
+                                alt="effacer la recherche" 
+                                className={styles.tagZoneCross} 
+                                src="/logos/cross.svg" 
+                                onClick={deleteSearch}/>)}
                     </div>
                     { tags.length > 0 && (
                         tags.map(tag => (
                             <div key={tag} className={styles.tagSearch}>
                                 {tag}
                                 <div className={styles.deleteTag} onClick={() => removeSelectedTag(tag)}>
-                                    <img  data-name={tag} className={styles.deleteTagCross} src="/logos/deleteTag.png" alt="delete tag"/>
+                                    <img  
+                                        className={styles.deleteTagCross} 
+                                        src="/logos/deleteTag.png" alt="delete tag"/>
                                 </div>
                             </div>
                         ))
