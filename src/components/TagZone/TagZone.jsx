@@ -62,7 +62,7 @@ export default function TagZone({label, items,  name, isOpen, toggle, refProp}) 
 
     return (
         <div className={styles.tagContainer}>
-            <div className={styles.tagZone}>
+            <div className={styles.tagZone} ref={refProp}>
                 <div className={styles.tagZoneHeader} >
                     <p className={styles.tagZoneTitle}>{label}</p>
                     <img 
@@ -71,7 +71,7 @@ export default function TagZone({label, items,  name, isOpen, toggle, refProp}) 
                         src="/logos/downArrow.png" 
                         onClick={toggle}/>
                 </div>
-                <div className={`${styles.tagZoneBottom} ${isOpen ? styles.tagZoneBottomExpanded : ""}`}   ref={refProp}>
+                <div className={`${styles.tagZoneBottom} ${isOpen ? styles.tagZoneBottomExpanded : ""}`}   >
                     <div className={styles.tagZoneInput}>
                         <input 
                             type="search" 

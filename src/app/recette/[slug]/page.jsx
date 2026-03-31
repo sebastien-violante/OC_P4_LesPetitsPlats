@@ -11,6 +11,7 @@ async function getRecipe(slug) {
 }
 
 export default async function RecipeDetails({params}) {
+    
     const { slug } =  await params
     const recipe = await getRecipe(slug)
   
